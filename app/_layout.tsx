@@ -56,6 +56,7 @@ function RootLayoutNav() {
         <Stack.Screen name="login" options={{ headerShown: false }} />
         <Stack.Screen name="register" options={{ headerShown: false }} />
         <Stack.Screen name="creator" options={{ headerShown: false }} />
+        <Stack.Screen name="onboarding/become-creator" options={{ headerShown: false }} />
       </Stack>
     </NavigationThemeProvider>
   );

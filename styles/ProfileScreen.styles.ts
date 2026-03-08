@@ -25,6 +25,71 @@ export const styles = StyleSheet.create({
     profileInfo: { flex: 1 },
     userName: { fontSize: 20, fontWeight: '700', marginBottom: 4 },
     userRole: { fontSize: 14, fontWeight: '600', letterSpacing: 0.5 },
+    becomeCreatorCard: {
+        borderRadius: 18,
+        paddingVertical: 18,
+        paddingHorizontal: 18,
+        marginBottom: 16,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    bcContent: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        flex: 1
+    },
+    bcIconCircle: {
+        width: 48,
+        height: 48,
+        borderRadius: 24,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 14
+    },
+    bcTextContainer: {
+        flex: 1
+    },
+    bcTitle: {
+        color: '#FFFFFF',
+        fontSize: 18,
+        fontWeight: '700',
+        marginBottom: 2
+    },
+    bcSubtitle: {
+        color: 'rgba(255,255,255,0.9)',
+        fontSize: 14,
+        fontWeight: '500'
+    },
+    creatorStatusCard: {
+        paddingVertical: 18,
+        paddingHorizontal: 16
+    },
+    creatorStatusContent: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    creatorStatusIcon: {
+        width: 44,
+        height: 44,
+        borderRadius: 22,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 12
+    },
+    creatorStatusText: {
+        flex: 1
+    },
+    creatorStatusTitle: {
+        fontSize: 16,
+        fontWeight: '700',
+        marginBottom: 2
+    },
+    creatorStatusSubtitle: {
+        fontSize: 13,
+        lineHeight: 18
+    },
     sectionTitle: {
         fontSize: 16,
         fontWeight: '600',
