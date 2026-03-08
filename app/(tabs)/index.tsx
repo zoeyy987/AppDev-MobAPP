@@ -51,7 +51,7 @@ export default function HomeScreen() {
               color={theme.text}
             />
           </Pressable>
-          <Pressable style={styles.avatarButton}>
+          <Pressable style={styles.avatarButton} onPress={() => router.push('/profile')}>
             <Image source={{ uri: 'https://via.placeholder.com/150' }} style={styles.avatarImage} />
           </Pressable>
         </View>

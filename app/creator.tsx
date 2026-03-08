@@ -19,6 +19,9 @@ import { useTheme } from '../context/ThemeContext';
 
 const { height: _SCREEN_HEIGHT } = Dimensions.get('window');
 
+const creatorId = 'mock-creator-id';
+const user = { uid: 'mock-user-123' };
+
 // --- SKELETON COMPONENT ---
 const SkeletonItem = ({ style, isDark }: { style: any, isDark: boolean }) => {
   const opacity = useRef(new Animated.Value(0.3)).current;
@@ -46,9 +49,7 @@ const SkeletonItem = ({ style, isDark }: { style: any, isDark: boolean }) => {
 
 export default function CreatorProfileScreen() {
   const router = useRouter();
-  const creatorId = 'mock-creator-id';
   const { theme, isDark } = useTheme();
-  const user = { uid: 'mock-user-123' };
 
   // ANALYTICS HOOK
   // const { trackProfileView, trackServiceClick } = useAnalytics();
@@ -413,7 +414,10 @@ export default function CreatorProfileScreen() {
 
       {/* HEADER */}
       <View style={styles.header}>
-        <Pressable onPress={() => router.back()} style={[styles.iconButton, { backgroundColor: theme.card }]}>
+        <Pressable
+          onPress={() => router.canGoBack() ? router.back() : router.replace('/(tabs)')}
+          style={[styles.iconButton, { backgroundColor: theme.card }]}
+        >
           <Ionicons name="arrow-back" size={24} color={theme.text} />
         </Pressable>
         {!isBlocked && !isOwnProfile && (
