@@ -5,7 +5,8 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 
-import { useTheme, ThemeProvider } from '../context/ThemeContext';
+import { RoleProvider } from '../context/RoleContext';
+import { ThemeProvider, useTheme } from '../context/ThemeContext';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -41,7 +42,9 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider>
-      <RootLayoutNav />
+      <RoleProvider>
+        <RootLayoutNav />
+      </RoleProvider>
     </ThemeProvider>
   );
 }
@@ -57,6 +60,11 @@ function RootLayoutNav() {
         <Stack.Screen name="register" options={{ headerShown: false }} />
         <Stack.Screen name="creator" options={{ headerShown: false }} />
         <Stack.Screen name="onboarding/become-creator" options={{ headerShown: false }} />
+        <Stack.Screen name="add-service" options={{ headerShown: false }} />
+        <Stack.Screen name="notifications" options={{ headerShown: false }} />
+        <Stack.Screen name="search" options={{ headerShown: false }} />
+        <Stack.Screen name="smart-match" options={{ headerShown: false }} />
+        <Stack.Screen name="chat/[id]" options={{ headerShown: false }} />
       </Stack>
     </NavigationThemeProvider>
   );

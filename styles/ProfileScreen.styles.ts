@@ -5,7 +5,10 @@ export const styles = StyleSheet.create({
     header: {
         padding: 20,
         paddingTop: Platform.OS === 'ios' ? 60 : 40,
-        borderBottomWidth: 1
+        borderBottomWidth: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
     headerTitle: { fontSize: 24, fontWeight: '700' },
     scrollContent: { padding: 16, paddingBottom: 100 },

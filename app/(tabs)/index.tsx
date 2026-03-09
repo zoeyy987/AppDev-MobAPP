@@ -52,8 +52,11 @@ export default function HomeScreen() {
               color={theme.text}
             />
           </Pressable>
+          <Pressable onPress={() => router.push('/notifications' as never)} style={styles.themeToggleButton}>
+            <Ionicons name="notifications-outline" size={20} color={theme.text} />
+          </Pressable>
           <Pressable style={styles.avatarButton} onPress={() => router.push('/profile')}>
-            <Image source={{ uri: 'https://via.placeholder.com/150' }} style={styles.avatarImage} />
+            <Image source={{ uri: 'https://picsum.photos/seed/profile/150/150' }} style={styles.avatarImage} />
           </Pressable>
         </View>
       </View>

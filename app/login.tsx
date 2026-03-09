@@ -1,4 +1,5 @@
 import { DPA_CONTENT, TERMS_CONTENT } from '@/constants/legal';
+import { useRole } from '@/context/RoleContext';
 import { useTheme } from '@/context/ThemeContext';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { Link, useRouter } from 'expo-router';
@@ -20,6 +21,7 @@ import { styles } from '../styles/LoginScreen.styles';
 export default function LoginScreen() {
   const _router = useRouter();
   const { theme, isDark: _isDark, mode, setMode } = useTheme();
+  const { setRole } = useRole();
   const _insets = useSafeAreaInsets();
 
   const toggleDarkMode = () => {
@@ -73,6 +75,7 @@ export default function LoginScreen() {
     }
 
     setLoading(true);
+    await setRole('client');
     setTimeout(() => {
       setLoading(false);
       _router.replace('/(tabs)' as never);
@@ -94,9 +97,10 @@ export default function LoginScreen() {
     }
 
     setLoading(true);
+    await setRole('creator');
     setTimeout(() => {
       setLoading(false);
-      _router.replace('/creator' as never);
+      _router.replace('/(tabs)' as never);
     }, 1000);
   };
 
@@ -195,15 +199,6 @@ export default function LoginScreen() {
 
   return (
     <View style={[styles.safe, themeStyles.container]}>
-      <View style={[styles.themeToggleContainer, { paddingTop: _insets.top }]}>
-        <Pressable onPress={toggleDarkMode} style={styles.themeToggleButton}>
-          <Ionicons
-            name={_isDark ? 'sunny-outline' : 'moon-outline'}
-            size={20}
-            color={theme.text}
-          />
-        </Pressable>
-      </View>
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1 }}>
         <ScrollView
           contentContainerStyle={styles.scrollContent}
