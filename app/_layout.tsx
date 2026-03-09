@@ -1,11 +1,12 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { DarkTheme, DefaultTheme, ThemeProvider as NavigationThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 
-import { useTheme } from '../context/ThemeContext';
+import { RoleProvider } from '../context/RoleContext';
+import { ThemeProvider, useTheme } from '../context/ThemeContext';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -39,20 +40,32 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+    <ThemeProvider>
+      <RoleProvider>
+        <RootLayoutNav />
+      </RoleProvider>
+    </ThemeProvider>
+  );
 }
 
 function RootLayoutNav() {
   const { isDark } = useTheme();
 
   return (
-    <ThemeProvider value={isDark ? DarkTheme : DefaultTheme}>
+    <NavigationThemeProvider value={isDark ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="login" options={{ headerShown: false }} />
         <Stack.Screen name="register" options={{ headerShown: false }} />
         <Stack.Screen name="creator" options={{ headerShown: false }} />
+        <Stack.Screen name="onboarding/become-creator" options={{ headerShown: false }} />
+        <Stack.Screen name="add-service" options={{ headerShown: false }} />
+        <Stack.Screen name="notifications" options={{ headerShown: false }} />
+        <Stack.Screen name="search" options={{ headerShown: false }} />
+        <Stack.Screen name="smart-match" options={{ headerShown: false }} />
+        <Stack.Screen name="chat/[id]" options={{ headerShown: false }} />
       </Stack>
-    </ThemeProvider>
+    </NavigationThemeProvider>
   );
 }

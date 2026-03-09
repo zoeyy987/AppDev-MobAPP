@@ -1,33 +1,37 @@
 import { Ionicons, Octicons } from '@expo/vector-icons';
 import { Tabs, useRouter } from 'expo-router';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { useRole } from '@/context/RoleContext';
 import { useTheme } from '@/context/ThemeContext';
-
-
 
 export default function TabLayout() {
   const { theme } = useTheme();
   const router = useRouter();
-  const [role, setRole] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { role, loading } = useRole();
 
   const unreadCount = 0;
   const unseenOrderCount = 0;
 
   const insets = useSafeAreaInsets();
 
+  const isCreator = role === 'creator';
+
+  // When creator logs in, auto-navigate to AnalyticsScreen tab
   useEffect(() => {
-    // Mock user role
-    setRole('client');
-    setLoading(false);
-  }, []);
+    if (!loading && isCreator) {
+      // Small delay to let tabs mount first
+      const timer = setTimeout(() => {
+        router.replace('/(tabs)/AnalyticsScreen' as never);
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [loading, isCreator]);
 
   // Center Button
   const CenterButton = () => {
-    const isCreator = role === 'creator';
     return (
       <View style={[styles.plusButton, { backgroundColor: theme.tint, borderColor: theme.background }]}>
         {isCreator ? (
@@ -37,12 +41,6 @@ export default function TabLayout() {
         )}
       </View>
     );
-  };
-
-  const handleOrderPress = () => {
-    // markOrdersAsSeen();
-    // Navigate to order screen
-    router.push('/order' as never);
   };
 
   // Show loading indicator while fetching role
@@ -79,7 +77,19 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color, focused }) => <Ionicons name={focused ? "home" : "home-outline"} size={26} color={color} />
+          tabBarIcon: ({ color, focused }) => <Ionicons name={focused ? "home" : "home-outline"} size={26} color={color} />,
+          href: isCreator ? null : undefined,
+        }}
+      />
+
+      {/* Creator-only: Analytics Dashboard as first tab */}
+      <Tabs.Screen
+        name="AnalyticsScreen"
+        options={{
+          title: 'Dashboard',
+          tabBarIcon: ({ color, focused }) =>
+            <Ionicons name={focused ? "analytics" : "analytics-outline"} size={26} color={color} />,
+          href: isCreator ? undefined : null,
         }}
       />
 
@@ -90,7 +100,7 @@ export default function TabLayout() {
           title: 'My Services',
           tabBarIcon: ({ color, focused }) =>
             <Ionicons name={focused ? "briefcase" : "briefcase-outline"} size={26} color={color} />,
-          href: role === 'creator' ? undefined : null
+          href: isCreator ? undefined : null,
         }}
       />
 
@@ -101,7 +111,7 @@ export default function TabLayout() {
           title: 'Search',
           tabBarIcon: ({ color, focused }) =>
             <Ionicons name={focused ? "search" : "search-outline"} size={26} color={color} />,
-          href: role !== 'creator' ? undefined : null
+          href: !isCreator ? undefined : null,
         }}
       />
 
@@ -116,7 +126,7 @@ export default function TabLayout() {
                 {...rest}
                 style={styles.plusContainer}
                 onPress={() => {
-                  if (role === 'creator') {
+                  if (isCreator) {
                     router.push('/add-service' as never);
                   } else {
                     router.push('/smart-match/match' as never);
@@ -152,7 +162,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="order"
         options={{
-          title: role === 'creator' ? 'My Gigs' : 'Orders',
+          title: isCreator ? 'My Gigs' : 'Orders',
           tabBarBadge: unseenOrderCount > 0 ? unseenOrderCount : undefined,
           tabBarBadgeStyle: {
             backgroundColor: theme.danger,
@@ -164,16 +174,10 @@ export default function TabLayout() {
           },
           tabBarIcon: ({ color, focused }) => <Ionicons name={focused ? "clipboard" : "clipboard-outline"} size={26} color={color} />
         }}
-        listeners={() => ({
-          tabPress: (_e) => {
-            handleOrderPress();
-          },
-        })}
       />
 
       {/* Hidden Routes */}
       <Tabs.Screen name="profile" options={{ href: null }} />
-      <Tabs.Screen name="AnalyticsScreen" options={{ href: null }} />
     </Tabs>
   );
 }
