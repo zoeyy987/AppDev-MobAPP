@@ -4,4 +4,5 @@ export { HomeHeader } from './HomeHeader';
 export { HomeSkeleton } from './HomeSkeleton';
 export { MatchesSection } from './MatchesSection';
 export { ServicesSection } from './ServicesSection';
+export { WalletSection } from './WalletSection';
 

@@ -8,7 +8,8 @@ import {
     HomeHeader,
     HomeSkeleton,
     MatchesSection,
-    ServicesSection
+    ServicesSection,
+    WalletSection
 } from '../../components/home/sections';
 import { useOrderUpdates } from '../../context/OrderContext';
 import { useTheme } from '../../context/ThemeContext';
@@ -189,6 +190,13 @@ export default function HomeScreen() {
         >
           <CategorySection categories={mainCategories} />
           
+          <WalletSection
+            balance={1875.42}
+            currency="₱"
+            onAddFunds={() => router.push('/profile')}
+            onWithdraw={() => router.push('/profile')}
+          />
+
           <MatchesSection matches={recentMatches} hasMatches={hasMatches} />
           
           <ServicesSection services={creatorServices} onServicePress={openServiceModal} />

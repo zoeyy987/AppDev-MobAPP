@@ -158,6 +158,8 @@ const translations = {
     securitySub: 'Login & Security',
     wallet: 'Wallet',
     paymentMethods: 'Payment Methods',
+    topUp: 'Top Up',
+    withdraw: 'Withdraw',
     language: 'Language',
     helpCenter: 'Help Center',
     support: 'Support',
